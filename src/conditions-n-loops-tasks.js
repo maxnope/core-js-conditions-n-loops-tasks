@@ -66,8 +66,16 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x || queen.y === king.y) {
+    return true;
+  }
+
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -288,8 +296,24 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let leftSum = 0;
+  let totalSum = 0;
+
+  for (let i = 0; i < arr.length; i += 1) {
+    totalSum += arr[i];
+  }
+  for (let index = 0; index < arr.length; index += 1) {
+    const rightSum = totalSum - leftSum - arr[index];
+
+    if (leftSum === rightSum) {
+      return index;
+    }
+
+    leftSum += arr[index];
+  }
+
+  return -1;
 }
 
 /**
@@ -371,8 +395,30 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+
+function shuffleChar(str, iterations) {
+  const stringObject = { value: str };
+
+  const { length } = stringObject.value;
+
+  if (length <= 1) {
+    return stringObject.value;
+  }
+
+  for (let iter = 0; iter < iterations; iter += 1) {
+    let evenChars = '';
+    let oddChars = '';
+    for (let i = 0; i < length; i += 1) {
+      if (i % 2 === 0) {
+        evenChars += stringObject.value[i];
+      } else {
+        oddChars += stringObject.value[i];
+      }
+    }
+    stringObject.value = evenChars + oddChars;
+  }
+
+  return stringObject.value;
 }
 
 /**
